@@ -1,12 +1,7 @@
 class DataForTests:
+    
     def __init__(self):
         pass
 
-    access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.\
-        eyJleHAiOjE3Mjg0NzE1MDIsImlhdCI6MTcyODMwMzUwMiwia\
-            XNzIjoiL2FwaS92MS9hdXRoL2Fub255bW91cyIsInN1Yi\
-                I6ImExYTcyNzcxMWY2NjIzZmRlMGU3YmFjZjVhMTll\
-                    NWYyM2RhNzA2ZDRhZmQ3NWIxODU5ZjI2YTg3MGF\
-                        lMzNjOGUiLCJ0eXBlIjoxMH0.NSi_-bfYwkt\
-                            mLtOJOeuaAIMaZj_NnwBO3KkH9JgHWLQ"
+    access_token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3VzZXItcmlnaHQiLCJzdWIiOjIxNTI2NDIyLCJpYXQiOjE3MzczODgyMDAsImV4cCI6MTczNzM5MTgwMCwidHlwZSI6MjB9.smsa4JO-4-NU1ziWdRxJXqGAHs18AvZi6IuAbcSdYQg"
     base_url = "https://web-gate.chitai-gorod.ru/api/"
