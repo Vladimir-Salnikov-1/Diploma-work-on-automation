@@ -60,3 +60,16 @@ class ApiClass:
         headers = api.add_headers(self)
         request = requests.delete(data.base_url + "v1/cart", headers=headers)
         return request
+    
+    def get_all_url_items_can_buy(self) -> list:
+        """Этот метод возвращает список url всех товаров в наличии"""
+        data = DataForTests
+        api = ApiClass
+        headers = api.add_headers(self)
+        request = requests.get(data.base_url + "v2/products", headers=headers).content
+        data = json.loads(request)
+        # Получение списка ID товаров с статусом 'canBuy'
+        can_buy_urls = [item['attributes']['url'] for item in data['data'] if item['attributes']['status'] == 'canBuy']
+        # Удаление префикса 'product/' из каждого URL
+        cleaned_urls = [url[len("product/"):] for url in can_buy_urls]
+        return cleaned_urls
