@@ -38,8 +38,9 @@ class ApiClass:
         data = DataForTests
         api = ApiClass
         headers = api.add_headers(self)
-        request = requests.get(data.base_url + "v1/cart", headers=headers)
-        return request
+        request = requests.get(data.base_url + "v1/cart", headers=headers).text
+        data_request = json.loads(request)
+        return data_request
     
     def add_item_in_cart(self, id_item):
         data = DataForTests
@@ -73,3 +74,22 @@ class ApiClass:
         # Удаление префикса 'product/' из каждого URL
         cleaned_urls = [url[len("product/"):] for url in can_buy_urls]
         return cleaned_urls
+    
+    def get_product_card(self, product_url):
+        """Этот метод переходит к карточке товара.
+        Принимает на вход url товара, возвращает тело ответа в json"""
+        data = DataForTests
+        api = ApiClass
+        headers = api.add_headers(self)
+        request = requests.get(data.base_url + "v1/products/slug/" + product_url, headers=headers).text
+        data_resp = json.loads(request)
+        return data_resp
+    
+    def get_short_contents_of_cart(self):
+        """Этот метод возвращает краткое содержание корзины"""
+        data = DataForTests
+        api = ApiClass
+        headers = api.add_headers(self)
+        request = requests.get(data.base_url + "v1/cart/short", headers=headers).text
+        data_resp = json.loads(request)
+        return data_resp

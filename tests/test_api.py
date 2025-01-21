@@ -1,22 +1,62 @@
 from classes.ApiClass import ApiClass
 
-
-def test_positive_receiving_a_product_card():
+def test_positive_get_product_card():
     api = ApiClass()
-    request = api.get_all_items()
-    assert request is not None
+    all_url = api.get_all_url_items_can_buy()
+    card = api.get_product_card(all_url[0])
+    requared_fields = ["id", "category", "url"]
+    for field in requared_fields:
+        assert field in card["data"]
 
-
-def test_can_buy():
+def test_psitive_add_item_in_cart():
     api = ApiClass()
-    id_cun_buy = api.get_all_id_items_can_buy()
-    urls = api.get_all_url_items_can_buy()
-    id_1_item = int(id_cun_buy[0])
-    req = api.add_item_in_cart(id_1_item)
-    cart = api.go_to_cart()
-    deli = api.delete_cart()
-    
-    assert id_cun_buy is not None
+    api.delete_cart()
+    list_id_items = api.get_all_id_items_can_buy()
+    item_1 = int(list_id_items[0])
+    api.add_item_in_cart(item_1)
+    data_cart = api.go_to_cart()
+    id_from_cart = data_cart["products"][0]["goodsId"]
+    api.delete_cart()
+    assert item_1 == id_from_cart
+
+def test_positive_delete_cart():
+    api = ApiClass()
+    api.delete_cart()
+    list_id_items = api.get_all_id_items_can_buy()
+    item_3 = int(list_id_items[2])
+    api.add_item_in_cart(item_3)
+    data_cart_1 = api.go_to_cart()
+    id_from_cart = data_cart_1["products"][0]["goodsId"]
+    assert item_3 == id_from_cart
+    data_delete = api.delete_cart()
+    assert data_delete.status_code == 204
+    assert data_delete.reason == 'No Content'
+    data_cart_2 = api.go_to_cart()
+    assert data_cart_2["products"] == []
+
+def test_positive_add_some_items_in_cart():
+    api = ApiClass()
+    api.delete_cart()
+    list_id_items = api.get_all_id_items_can_buy()
+    item_1 = int(list_id_items[2])
+    item_2 = int(list_id_items[5])
+    item_3 = int(list_id_items[10])
+    api.add_item_in_cart(item_1)
+    api.add_item_in_cart(item_2)
+    api.add_item_in_cart(item_3)
+    cart = api.get_short_contents_of_cart()
+    assert cart['data']['quantity'] == 3
+    list_added_items = [item_1, item_2, item_3]
+    for item in list_added_items:
+        assert item in cart['data']['items']
+    api.delete_cart()
+
+def test_positive_view_short_contents_of_empty_cart():
+    api = ApiClass()
+    api.delete_cart()
+    empty_cart = api.get_short_contents_of_cart()
+    assert empty_cart['data']['quantity'] == 0
+    assert empty_cart['data']['items'] == []
     
 
 
