@@ -6,6 +6,13 @@ def test_positive_receiving_a_product_card():
     request = api.get_all_items()
     assert request is not None
 
+
+def test_can_buy():
+    api = ApiClass()
+    id_cun_buy = api.get_all_id_items_can_buy()
+    assert id_cun_buy is not None
+
+
 # def test_positive_adding_item_to_cart():
 # def test_positive_clear_basket():
 # def test_positive_add_multiple_items_to_cart():
