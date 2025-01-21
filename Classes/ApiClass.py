@@ -14,6 +14,7 @@ class ApiClass:
             "Content-Type": "application/json"
             }
         return headers
+    
     def get_all_items(self) -> dict:
         """Этот метод возвращает все товары"""
         data = DataForTests
@@ -39,5 +40,23 @@ class ApiClass:
         headers = api.add_headers(self)
         request = requests.get(data.base_url + "v1/cart", headers=headers)
         return request
-        
-    #def add_item_in_cart
+    
+    def add_item_in_cart(self, id_item):
+        data = DataForTests
+        api = ApiClass
+        headers = api.add_headers(self)
+        body = {
+                "id": id_item,
+                "adData": {
+                    "item_list_name": "product-page"
+                }
+            }
+        request = requests.post(data.base_url + "v1/cart/product", headers=headers, json=body)
+        return request
+    
+    def delete_cart(self):
+        data = DataForTests
+        api = ApiClass
+        headers = api.add_headers(self)
+        request = requests.delete(data.base_url + "v1/cart", headers=headers)
+        return request
