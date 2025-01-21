@@ -10,6 +10,8 @@ def test_positive_receiving_a_product_card():
 def test_can_buy():
     api = ApiClass()
     id_cun_buy = api.get_all_id_items_can_buy()
+    cart = api.go_to_cart()
+    
     assert id_cun_buy is not None
 
 
