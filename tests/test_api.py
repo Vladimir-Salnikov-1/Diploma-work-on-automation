@@ -1,6 +1,6 @@
-from classes.ApiClass import ApiClass
+from tests.ApiClass import ApiClass
 import requests
-from classes.DataForTests import DataForTests
+from tests.DataForTests import DataForTests
 
 def test_positive_get_product_card():
     api = ApiClass()
@@ -59,13 +59,13 @@ def test_positive_view_short_contents_of_empty_cart():
     empty_cart = api.get_short_contents_of_cart()
     assert empty_cart['data']['quantity'] == 0
     assert empty_cart['data']['items'] == []
-    
+
 def test_negative_add_some_items_in_cart_onetime():
     api = ApiClass()
     id_items = api.get_all_id_items_can_buy()
     request = api.add_item_in_cart([int(id_items[0]), int(id_items[2]), int(id_items[5])])
     assert request.status_code == 400
-    
+
 def test_negative_respons_without_token():
     data_cart = requests.get(DataForTests.base_url + "v1/cart")
     assert data_cart.status_code == 401

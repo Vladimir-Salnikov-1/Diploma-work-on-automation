@@ -1,5 +1,5 @@
 import requests
-from classes.DataForTests import DataForTests
+from tests.DataForTests import DataForTests
 import json
 
 
