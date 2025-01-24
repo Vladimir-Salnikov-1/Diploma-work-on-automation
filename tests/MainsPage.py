@@ -60,6 +60,13 @@ class MainsPage:
     def get_elements_result_search_unknown_product(self):
         res = self.browser.find_element(By.CSS_SELECTOR, ".catalog-empty-result__header")
         return res.text
+    
+    def get_value_from_cart_icon(self):
+        res = self.browser.find_element(By. CSS_SELECTOR, ".header-cart__badge")
+        return res.text
+    
+        
+        
         
     
     
