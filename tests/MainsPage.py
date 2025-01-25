@@ -11,7 +11,9 @@ from time import sleep
 selector_element_input = ".header-search__input"
 selector_elements_result_item = "[index]"
 selector_element_cart = ".header-cart.sticky-header__controls-item"
-
+selector_anim_load_spin_in_input = ".chg-app-loader"
+selector_element_close_input = "[aria-label='Очистить']"
+selector_element_search_button = ".header-search__button"
 
 class MainsPage:
     
@@ -30,11 +32,16 @@ class MainsPage:
         elem_input = self.browser.find_element(By.CSS_SELECTOR, selector_element_input)
         elem_input.clear()
         elem_input.send_keys(name)
-        sleep(1)
+        WebDriverWait(self.browser, 10, 0.1).until(
+            EC.visibility_of_element_located(
+                (By.CSS_SELECTOR, selector_anim_load_spin_in_input)))
+        WebDriverWait(self.browser, 10, 0.1).until(
+            EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, selector_element_close_input)))
         
         
     def push_button_search(self):
-        elem_button_search = self.browser.find_element(By.CSS_SELECTOR, ".header-search__button")
+        elem_button_search = self.browser.find_element(By.CSS_SELECTOR, selector_element_search_button)
         elem_button_search.click()
         WebDriverWait(self.browser, 10, 0.1).until(
             EC.visibility_of_all_elements_located(
@@ -51,7 +58,7 @@ class MainsPage:
         return list_name
     
     def push_button_search_with_unknown_product(self):
-        elem_button_search = self.browser.find_element(By.CSS_SELECTOR, ".header-search__button")
+        elem_button_search = self.browser.find_element(By.CSS_SELECTOR, selector_element_search_button)
         elem_button_search.click()
         WebDriverWait(self.browser, 10, 0.1).until(
             EC.visibility_of_all_elements_located(
