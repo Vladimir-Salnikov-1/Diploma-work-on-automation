@@ -8,6 +8,13 @@ from DataForTests import DataForTests
 from time import sleep
 from MainsPage import MainsPage
 
+long_name = "В целом, конечно, укрепление и развитие внутренней структуры\
+    говорит о возможностях новых принципов формирования материально-\
+        технической и кадровой базы. Разнообразный и богатый опыт говорит нам,\
+            что укрепление и развитие внутренней структуры создаёт\
+                необходимость включения в производственный план целого ряда\
+                    внеочередных мероприятий с учётом комплекса новых\
+                        предложений."
 
 def test_result_search():
     main_page = MainsPage()
@@ -68,4 +75,46 @@ def test_value_in_input_so_value_in_result():
     value = main_page.get_value_search_from_found_message()
     assert value == name
     
+def test_negitive_very_long_value_in_input():
+    main_page = MainsPage()
+    main_page.go_to_main_page()
+    main_page.send_keys_input(long_name)
+    WebDriverWait(main_page.browser, 10, 0.1).until(
+            EC.visibility_of_element_located(
+                (By.CSS_SELECTOR, ".result-item__mark")))
+    elem = main_page.browser.find_element(
+        By.CSS_SELECTOR, ".result-item__mark").text
+    len_elem = len(elem)
+    assert len_elem == 139
+    
+def test_some_click_on_button_search():
+    main_page = MainsPage()
+    main_page.go_to_main_page()
+    name = "апофения"
+    main_page.send_keys_input(name)
+    main_page.push_button_search()
+    res_before = main_page.browser.find_element(
+            By. CSS_SELECTOR, ".search-page__found-message").text
+    len_item_before = len(main_page.browser.find_elements(By.CSS_SELECTOR, "article"))
+    products_list_before = main_page.browser.find_element(By. CSS_SELECTOR, ".products-list").text
+    assert name in res_before
+    
+    for push in range(11):
+        main_page.push_button_search()
+    res_after = main_page.browser.find_element(
+            By. CSS_SELECTOR, ".search-page__found-message").text
+    len_item_after = len(main_page.browser.find_elements(By.CSS_SELECTOR, "article"))
+    products_list_after = main_page.browser.find_element(By. CSS_SELECTOR, ".products-list").text
+    assert res_before == res_after, "Сообщение о результате поиска поменялось"
+    assert len_item_before == len_item_after, "Добавились новые товары"
+    assert products_list_before == products_list_after
+    
+    # WebDriverWait(self.browser, 10, 0.1).until(
+    #     EC.visibility_of_element_located(
+    #         (By.CSS_SELECTOR, selector_anim_load_spin_in_input)))
+    # WebDriverWait(self.browser, 10, 0.1).until(
+    #     EC.element_to_be_clickable(
+    #         (By.CSS_SELECTOR, selector_element_close_input)))
+    
 
+    
