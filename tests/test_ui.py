@@ -7,8 +7,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from DataForTests import DataForTests
 from time import sleep
 from MainsPage import MainsPage
-    
-    
+
+
 def test_result_search():
     main_page = MainsPage()
     main_page.go_to_main_page()
@@ -20,6 +20,7 @@ def test_result_search():
     assert name.lower() in name_1.lower()
     main_page.browser.quit()
 
+
 def test_dropdown_list_results_match_the_entered_value():
     main_page = MainsPage()
     main_page.go_to_main_page()
@@ -29,7 +30,8 @@ def test_dropdown_list_results_match_the_entered_value():
     name_1 = res[0].text
     assert len(res) == 4
     assert name.lower() in name_1.lower()
-    
+
+
 def test_search_for_an_unknown_product():
     main_page = MainsPage()
     main_page.go_to_main_page()
@@ -39,13 +41,13 @@ def test_search_for_an_unknown_product():
     elem = main_page.get_elements_result_search_unknown_product()
     assert "Похоже, у нас такого нет" in elem
 
+
 def test_add_items_in_cart():
     main_page = MainsPage()
     main_page.go_to_main_page()
     name = "Происхождение жизни"
     main_page.send_keys_input(name)
     main_page.push_button_search()
-    sleep(3)
     main_page.browser.execute_script("window.scrollBy(0, 500);")
     elements = main_page.browser.find_elements(By.CSS_SELECTOR, ".button.action-button.blue")
     buy_buttons = [el for el in elements if el.text.strip() == "КУПИТЬ"]
@@ -56,6 +58,15 @@ def test_add_items_in_cart():
                 (By.CSS_SELECTOR, ".header-cart__badge")))
     res = main_page.get_value_from_cart_icon()
     assert int(res) == 1
-        
+
+
+def test_value_in_input_so_value_in_result():
+    main_page = MainsPage()
+    main_page.go_to_main_page()
+    name = "апофения"
+    main_page.send_keys_input(name)
+    main_page.push_button_search()
+    value = main_page.get_value_search_from_found_message()
+    assert value == name
     
-  
+

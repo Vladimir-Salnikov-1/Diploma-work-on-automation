@@ -176,7 +176,7 @@ def test_negative_add_some_items_in_cart_onetime():
 def test_negative_respons_without_token():
     with allure.step("Создать запрос на переход на главную страницу сайта\
             без добавления токена"):
-        data_cart = requests.get(DataForTests.base_url + "v1/cart")
+        data_cart = requests.get(DataForTests.base_url_for_api + "v1/cart")
         allure.attach(str(data_cart.status_code), "Статус-код ответа")
         allure.attach(str(data_cart.reason), "Сообщение ошибки")
     with allure.step("Проверить что статус код равен ожидаемому"):

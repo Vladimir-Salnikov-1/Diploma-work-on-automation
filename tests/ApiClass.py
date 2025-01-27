@@ -29,7 +29,7 @@ class ApiClass:
             headers = api.add_headers(self)
         with allure.step("Создать запрос на получение всех продуктов"):
             request = requests.get(
-                data.base_url + "v2/products", headers=headers).content
+                data.base_url_for_api + "v2/products", headers=headers).content
         return request
 
     def get_all_id_items_can_buy(self) -> list:
@@ -41,7 +41,7 @@ class ApiClass:
             headers = api.add_headers(self)
         with allure.step("Создать запрос на получение списка всех продуктов"):
             request = requests.get(
-                data.base_url + "v2/products", headers=headers).content
+                data.base_url_for_api + "v2/products", headers=headers).content
             data = json.loads(request)
         with allure.step("Отфильтровать список, получить ID\
                 товаров которые готовы к покупке"):
@@ -58,7 +58,7 @@ class ApiClass:
             headers = api.add_headers(self)
         with allure.step("Создать запрос на получение списка всех продуктов"):
             request = requests.get(
-                data.base_url + "v2/products", headers=headers).content
+                data.base_url_for_api + "v2/products", headers=headers).content
             data = json.loads(request)
         with allure.step("Отфильтровать список, получить ID товаров\
                 которые не готовы к покупке"):
@@ -76,7 +76,7 @@ class ApiClass:
             headers = api.add_headers(self)
         with allure.step("Создать запрос на переход в корзину"):
             request = requests.get(
-                data.base_url + "v1/cart", headers=headers).text
+                data.base_url_for_api + "v1/cart", headers=headers).text
             data_request = json.loads(request)
         return data_request
 
@@ -97,7 +97,7 @@ class ApiClass:
                 }
         with allure.step("Создать запрос для добавления товара в корзину"):
             request = requests.post(
-                data.base_url + "v1/cart/product", headers=headers, json=body)
+                data.base_url_for_api + "v1/cart/product", headers=headers, json=body)
             allure.attach(str(id_item), "Передаваемый ID")
             allure.attach(str(body), "Тело запроса")
         return request
@@ -111,7 +111,7 @@ class ApiClass:
             headers = api.add_headers(self)
         with allure.step("Создать запрос для очищения корзины"):
             request = requests.delete(
-                data.base_url + "v1/cart", headers=headers)
+                data.base_url_for_api + "v1/cart", headers=headers)
         return request
 
     def get_all_url_items_can_buy(self) -> list:
@@ -123,7 +123,7 @@ class ApiClass:
             headers = api.add_headers(self)
         with allure.step("Создать запрос для получения всех товаров"):
             request = requests.get(
-                data.base_url + "v2/products", headers=headers).content
+                data.base_url_for_api + "v2/products", headers=headers).content
             data = json.loads(request)
         with allure.step("Отфильтровать все URL у товаров в наличии"):
             can_buy_urls = [item['attributes']['url'] for item in data[
@@ -142,7 +142,7 @@ class ApiClass:
             headers = api.add_headers(self)
         with allure.step("Создать запрос для получения карточки товара"):
             request = requests.get(
-                data.base_url + "v1/products/slug/" + product_url,
+                data.base_url_for_api + "v1/products/slug/" + product_url,
                 headers=headers).text
             data_resp = json.loads(request)
             allure.attach(product_url, "Передаваемый URL")
@@ -158,6 +158,6 @@ class ApiClass:
         with allure.step("Создать запрос для получения\
                 краткого содержания корзины"):
             request = requests.get(
-                data.base_url + "v1/cart/short", headers=headers).text
+                data.base_url_for_api + "v1/cart/short", headers=headers).text
         data_resp = json.loads(request)
         return data_resp

@@ -3,9 +3,8 @@ class DataForTests:
     def __init__(self):
         pass
 
-    access_token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3VzZXItcmlnaHQiLCJzdWIiOjIxNTI2NDIyLCJpYXQiOjE3Mzc3MzY1MzksImV4cCI6MTczNzc0MDEzOSwidHlwZSI6MjB9.41LR3zAWVnYYa_d5NM5tw9_FnCcmReLrNZWWdwxGmoc"
-    access_token_for_ui = "Bearer%20eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3VzZXItcmlnaHQiLCJzdWIiOjIxNTI2NDIyLCJpYXQiOjE3Mzc1NjY3OTIsImV4cCI6MTczNzU3MDM5MiwidHlwZSI6MjB9.ViuY7_67s1Wm_TfOjET3NzX4B0FSxODb6mYdePHe8-w"
-    base_url = "https://web-gate.chitai-gorod.ru/api/"
+    access_token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3VzZXItcmlnaHQiLCJzdWIiOjIxNTI2NDIyLCJpYXQiOjE3Mzc5NjY4ODMsImV4cCI6MTczNzk3MDQ4MywidHlwZSI6MjB9.htQ0XXBa8MEOu2OxHaEH3kv_Bz8dtsyeJspjUR119Og"
+    base_url_for_api = "https://web-gate.chitai-gorod.ru/api/"
     base_url_for_ui = "https://www.chitai-gorod.ru/"
     
     

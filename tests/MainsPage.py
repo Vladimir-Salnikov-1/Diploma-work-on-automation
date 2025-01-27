@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
+import re
 
 
 selector_element_input = ".header-search__input"
@@ -14,6 +15,7 @@ selector_element_cart = ".header-cart.sticky-header__controls-item"
 selector_anim_load_spin_in_input = ".chg-app-loader"
 selector_element_close_input = "[aria-label='Очистить']"
 selector_element_search_button = ".header-search__button"
+selector_messages_about_found_products = ".search-page__found-message"
 
 class MainsPage:
     
@@ -72,10 +74,12 @@ class MainsPage:
         res = self.browser.find_element(By. CSS_SELECTOR, ".header-cart__badge")
         return res.text
     
-        
-        
-        
-    
-    
-        
-        
+    def get_value_search_from_found_message(self):
+        """Этот метод возвращает значение запроса
+        из сообщения о найденных товарах"""
+        res = self.browser.find_element(
+            By. CSS_SELECTOR, selector_messages_about_found_products).text
+        match = re.search(r"«(.*?)»", res)
+        value_search_from_found_message = match.group(1)
+        return value_search_from_found_message
+         
