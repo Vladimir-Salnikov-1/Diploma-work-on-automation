@@ -57,6 +57,7 @@ class MainsPage:
                 (By.CSS_SELECTOR, selector_element_close_input)))
 
     def push_button_search(self):
+        """Этот метод нажимает на кнопку поиска в поле ввода."""
         elem_button_search = self.browser.find_element(
             By.CSS_SELECTOR, selector_element_search_button)
         elem_button_search.click()
@@ -64,17 +65,23 @@ class MainsPage:
             EC.visibility_of_all_elements_located(
                 (By.CSS_SELECTOR, selector_element_title_product)))
 
-    def get_elements_result_item(self):
+    def get_elements_result_item(self) -> list:
+        """Этот метод получает список элементов результата поиска
+        внизу, под полем ввода, еще до нажатия на значок поиска"""
         elems = self.browser.find_elements(
             By.CSS_SELECTOR, selector_elements_result_item)
         return elems
 
-    def get_list_name_of_result_search(self):
+    def get_list_name_of_result_search(self) -> list:
+        """Этот метод получает список элементов названий
+        товаров под карточкой товара"""
         list_name = self.browser.find_elements(
             By.CSS_SELECTOR, selector_element_title_product)
         return list_name
 
     def push_button_search_with_unknown_product(self):
+        """Этот метод нажимает на кнопку Найти, когда
+        мы ищем заведомо неизвестный товар."""
         elem_button_search = self.browser.find_element(
             By.CSS_SELECTOR, selector_element_search_button)
         elem_button_search.click()
@@ -82,17 +89,21 @@ class MainsPage:
             EC.visibility_of_all_elements_located(
                 (By.CSS_SELECTOR, selector_container_empty_result)))
 
-    def get_elements_result_search_unknown_product(self):
+    def get_elements_result_search_unknown_product(self) -> str:
+        """Этот метод возвращает значение заголовка контейнера,
+        который появляется когда товар не получилось найти"""
         res = self.browser.find_element(
             By.CSS_SELECTOR, selector_header_empty_result)
         return res.text
 
-    def get_value_from_cart_icon(self):
+    def get_value_from_cart_icon(self) -> str:
+        """Этот метод возвращает значение значка счетчика на значке
+        корзины, когда товары присутствуют в ней"""
         res = self.browser.find_element(
             By. CSS_SELECTOR, selector_counter_on_cart_icon)
         return res.text
 
-    def get_value_search_from_found_message(self):
+    def get_value_search_from_found_message(self) -> str:
         """Этот метод возвращает значение запроса
         из сообщения о найденных товарах"""
         res = self.browser.find_element(
@@ -101,7 +112,7 @@ class MainsPage:
         value_search_from_found_message = match.group(1)
         return value_search_from_found_message
 
-    def get_buttons_buy(self):
+    def get_buttons_buy(self) -> list:
         elements = self.browser.find_elements(
             By.CSS_SELECTOR, selector_element_button_of_item)
         buy_buttons = [el for el in elements if el.text.strip() == "КУПИТЬ"]

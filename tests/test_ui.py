@@ -89,7 +89,7 @@ def test_negitive_very_long_value_in_input():
     main_page.browser.quit()
 
 
-def test_some_click_on_button_search():
+def test_negetive_some_click_on_button_search():
     main_page = MainsPage()
     main_page.go_to_main_page()
     name = "апофения"
@@ -99,7 +99,6 @@ def test_some_click_on_button_search():
     len_item_before = len(main_page.get_product_carts())
     products_list_before = main_page.get_list_of_products()
     assert name in message_before
-    main_page.browser.quit()
     
     for push in range(11):
         main_page.push_button_search()
