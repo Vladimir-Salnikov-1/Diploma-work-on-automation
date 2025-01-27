@@ -22,7 +22,6 @@ class MainsPage:
         self.selector_anim_load_spin_in_input = ".chg-app-loader"
         self.selector_element_close_input = "[aria-label='Очистить']"
         self.selector_element_search_button = ".header-search__button"
-        self.selector_messages_about_found_products = ".search-page__found-message"
         self.selector_element_message_on_search = ".search-page__found-message"
         self.selector_element_products_list = ".products-list"
         self.selector_element_product_cart = "article"
@@ -104,28 +103,33 @@ class MainsPage:
         """Этот метод возвращает значение запроса
         из сообщения о найденных товарах"""
         res = self.browser.find_element(
-            By. CSS_SELECTOR, self.selector_messages_about_found_products).text
+            By. CSS_SELECTOR, self.selector_element_message_on_search).text
         match = re.search(r"«(.*?)»", res)
         value_search_from_found_message = match.group(1)
         return value_search_from_found_message
 
     def get_buttons_buy(self) -> list:
+        """Этот метод возвращает все кнопки КУПИТЬ."""
         elements = self.browser.find_elements(
             By.CSS_SELECTOR, self.selector_element_button_of_item)
         buy_buttons = [el for el in elements if el.text.strip() == "КУПИТЬ"]
         return buy_buttons
 
     def get_product_carts(self) -> list:
+        """Этот метод возвращает список карточек продуктов."""
         elements = self.browser.find_elements(
             By.CSS_SELECTOR, self.selector_element_product_cart)
         return elements
 
     def get_list_of_products(self) -> str:
+        """Этот метод возвращает список продуктов."""
         products_list_before = self.browser.find_element(
             By. CSS_SELECTOR, self.selector_element_products_list).text
         return products_list_before
 
     def get_message_on_the_search_results(self) -> str:
+        """Этот метод возвращает текст сообщения данных
+        о результатах поиска."""
         message = self.browser.find_element(
             By. CSS_SELECTOR, self.selector_element_message_on_search).text
         return message
