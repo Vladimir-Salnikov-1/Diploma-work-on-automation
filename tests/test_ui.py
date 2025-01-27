@@ -105,7 +105,9 @@ def test_negetive_some_click_on_button_search():
     message_after = main_page.get_message_on_the_search_results()
     len_item_after = len(main_page.get_product_carts())
     products_list_after = main_page.get_list_of_products()
-    assert message_before == message_after, "Сообщение о результате поиска поменялось"
+    assert message_before == message_after, \
+        "Сообщение о результате поиска поменялось"
     assert len_item_before == len_item_after, "Добавились новые товары"
-    assert products_list_before == products_list_after
+    assert products_list_before == products_list_after, \
+        "Поменялся состав товаров"
     main_page.browser.quit()
