@@ -83,3 +83,7 @@ class MainsPage:
         value_search_from_found_message = match.group(1)
         return value_search_from_found_message
          
+    def get_buttons_buy(self):
+        elements = self.browser.find_elements(By.CSS_SELECTOR, ".button.action-button.blue")
+        buy_buttons = [el for el in elements if el.text.strip() == "КУПИТЬ"]
+        return buy_buttons

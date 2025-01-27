@@ -49,8 +49,7 @@ def test_add_items_in_cart():
     main_page.send_keys_input(name)
     main_page.push_button_search()
     main_page.browser.execute_script("window.scrollBy(0, 500);")
-    elements = main_page.browser.find_elements(By.CSS_SELECTOR, ".button.action-button.blue")
-    buy_buttons = [el for el in elements if el.text.strip() == "КУПИТЬ"]
+    buy_buttons = main_page.get_buttons_buy()
     buy_buttons[0].click()
     main_page.browser.execute_script("window.scrollBy(0, -500);")
     WebDriverWait(main_page.browser, 10, 0.1).until(
