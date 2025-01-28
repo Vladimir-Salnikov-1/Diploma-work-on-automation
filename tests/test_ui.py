@@ -1,12 +1,7 @@
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from DataForTests import DataForTests
-from time import sleep
-from MainsPage import MainsPage
+from tests.class_for_tests.MainsPage import MainsPage
 
 long_name_373 = "В целом, конечно, укрепление и развитие внутренней структуры говорит о возможностях новых принципов формирования материально-технической и кадровой базы. Разнообразный и богатый опыт говорит нам, что укрепление и развитие внутренней структуры создаёт необходимость включения в производственный план целого ряда внеочередных мероприятий с учётом комплекса новых предложений."
 

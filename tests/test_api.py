@@ -1,4 +1,4 @@
-from ApiClass import ApiClass
+from tests.class_for_tests.ApiClass import ApiClass
 import requests
 from DataForTests import DataForTests
 import allure
