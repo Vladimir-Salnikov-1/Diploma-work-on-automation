@@ -97,7 +97,8 @@ class ApiClass:
                 }
         with allure.step("Создать запрос для добавления товара в корзину"):
             request = requests.post(
-                data.base_url_for_api + "v1/cart/product", headers=headers, json=body)
+                data.base_url_for_api + "v1/cart/product",
+                headers=headers, json=body)
             allure.attach(str(id_item), "Передаваемый ID")
             allure.attach(str(body), "Тело запроса")
         return request
