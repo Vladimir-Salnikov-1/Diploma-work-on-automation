@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import re
 import allure
+from selenium.webdriver.remote.webelement import WebElement
 
 
 class MainsPage:
@@ -32,7 +33,7 @@ class MainsPage:
         self.selector_header_empty_result = ".catalog-empty-result__header"
         self.selector_counter_on_cart_icon = ".header-cart__badge"
 
-    def go_to_main_page(self):
+    def go_to_main_page(self) -> None:
         """Этот метод переходит на главную страницу сайта"""
         self.browser.get(DataForTests.base_url_for_ui)
         allure.attach(DataForTests.base_url_for_ui, "Используемый URL")
@@ -58,7 +59,7 @@ class MainsPage:
                 EC.element_to_be_clickable(
                     (By.CSS_SELECTOR, self.selector_element_close_input)))
 
-    def push_button_search(self):
+    def push_button_search(self) -> None:
         """Этот метод нажимает на кнопку поиска в поле ввода."""
         with allure.step("Нажать на кнопку поиска"):
             elem_button_search = self.browser.find_element(
@@ -69,21 +70,21 @@ class MainsPage:
                 EC.visibility_of_all_elements_located(
                     (By.CSS_SELECTOR, self.selector_element_title_product)))
 
-    def get_elements_result_item(self):
+    def get_elements_result_item(self) -> list[WebElement]:
         """Этот метод получает список элементов результата поиска
         внизу, под полем ввода, еще до нажатия на значок поиска"""
         elems = self.browser.find_elements(
             By.CSS_SELECTOR, self.selector_elements_result_item)
         return elems
 
-    def get_list_name_of_result_search(self):
+    def get_list_name_of_result_search(self) -> list[WebElement]:
         """Этот метод получает список элементов названий
         товаров под карточкой товара"""
         list_name = self.browser.find_elements(
             By.CSS_SELECTOR, self.selector_element_title_product)
         return list_name
 
-    def push_button_search_with_unknown_product(self):
+    def push_button_search_with_unknown_product(self) -> None:
         """Этот метод нажимает на кнопку Найти, когда
         мы ищем заведомо неизвестный товар."""
         with allure.step("Нажать на кнопку поиска"):
@@ -121,7 +122,7 @@ class MainsPage:
             value_search_from_found_message = match.group(1)
         return value_search_from_found_message
 
-    def get_buttons_buy(self):
+    def get_buttons_buy(self) -> list[WebElement]:
         """Этот метод возвращает все кнопки КУПИТЬ."""
         elements = self.browser.find_elements(
             By.CSS_SELECTOR, self.selector_element_button_of_item)

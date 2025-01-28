@@ -2,6 +2,7 @@ import requests
 from DataForTests import DataForTests
 import json
 import allure
+from requests.models import Response
 
 
 class ApiClass:
@@ -80,7 +81,7 @@ class ApiClass:
             data_request = json.loads(request)
         return data_request
 
-    def add_item_in_cart(self, id_item):
+    def add_item_in_cart(self, id_item) -> Response:
         """Этот метод для добавления товара в корзину.
         Принимает на вход id товара"""
         with allure.step("Создать объект класса DataForTests"):
@@ -103,7 +104,7 @@ class ApiClass:
             allure.attach(str(body), "Тело запроса")
         return request
 
-    def delete_cart(self):
+    def delete_cart(self) -> Response:
         """Этот метод очищает корзину"""
         with allure.step("Создать объект класса DataForTests"):
             data = DataForTests
