@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import re
+import allure
 
 
 class MainsPage:
@@ -34,6 +35,7 @@ class MainsPage:
     def go_to_main_page(self):
         """Этот метод переходит на главную страницу сайта"""
         self.browser.get(DataForTests.base_url_for_ui)
+        allure.attach(DataForTests.base_url_for_ui, "Используемый URL")
 
     def send_keys_input(self, name: str):
         """Этот метод вводит в поле ввода поиска какое-то значение.

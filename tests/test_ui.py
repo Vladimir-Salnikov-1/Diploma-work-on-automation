@@ -6,7 +6,7 @@ from tests.class_for_tests.MainsPage import MainsPage
 long_name_373 = "В целом, конечно, укрепление и развитие внутренней структуры говорит о возможностях новых принципов формирования материально-технической и кадровой базы. Разнообразный и богатый опыт говорит нам, что укрепление и развитие внутренней структуры создаёт необходимость включения в производственный план целого ряда внеочередных мероприятий с учётом комплекса новых предложений."
 
 
-def test_result_search():
+def test_positive_result_search():
     main_page = MainsPage()
     main_page.go_to_main_page()
     name = "Происхождение жизни"
@@ -18,7 +18,7 @@ def test_result_search():
     main_page.browser.quit()
 
 
-def test_dropdown_list_results_match_the_entered_value():
+def test_positive_dropdown_list_results_match_the_entered_value():
     main_page = MainsPage()
     main_page.go_to_main_page()
     name = "Происхождение жизни"
@@ -30,7 +30,7 @@ def test_dropdown_list_results_match_the_entered_value():
     main_page.browser.quit()
 
 
-def test_search_for_an_unknown_product():
+def test_positive_search_for_an_unknown_product():
     main_page = MainsPage()
     main_page.go_to_main_page()
     unknown_product = "kf,vfloll."
@@ -41,7 +41,7 @@ def test_search_for_an_unknown_product():
     main_page.browser.quit()
 
 
-def test_add_items_in_cart():
+def test_positive_add_items_in_cart():
     main_page = MainsPage()
     main_page.go_to_main_page()
     name = "Происхождение жизни"
@@ -59,7 +59,7 @@ def test_add_items_in_cart():
     main_page.browser.quit()
 
 
-def test_value_in_input_so_value_in_result():
+def test_positive_value_in_input_so_value_in_result():
     main_page = MainsPage()
     main_page.go_to_main_page()
     name = "апофения"
@@ -94,7 +94,6 @@ def test_negetive_some_click_on_button_search():
     len_item_before = len(main_page.get_product_carts())
     products_list_before = main_page.get_list_of_products()
     assert name in message_before
-    
     for push in range(11):
         main_page.push_button_search()
     message_after = main_page.get_message_on_the_search_results()
