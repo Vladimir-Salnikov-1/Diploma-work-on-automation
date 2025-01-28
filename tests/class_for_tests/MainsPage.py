@@ -40,37 +40,43 @@ class MainsPage:
     def send_keys_input(self, name: str):
         """Этот метод вводит в поле ввода поиска какое-то значение.
         На вход принимает название товара или автора"""
-        elem_input = self.browser.find_element(
-            By.CSS_SELECTOR, self.selector_element_input)
-        elem_input.clear()
-        elem_input.send_keys(name)
-        try:
+        with allure.step("Очистить поле ввода"):
+            elem_input = self.browser.find_element(
+                By.CSS_SELECTOR, self.selector_element_input)
+            elem_input.clear()
+        with allure.step("Ввести в поле ввода значение"):
+            elem_input.send_keys(name)
+            allure.attach(name, "Введенное значение")
+        with allure.step("Подождать прогрузки необходимых элементов"):
+            try:
+                WebDriverWait(self.browser, 10, 0.1).until(
+                    EC.visibility_of_element_located(
+                        (By.CSS_SELECTOR, self.selector_anim_load_spin_in_input)))
+            except TimeoutException:
+                print("Спиннер загрузки не появился в течение указанного времени.")
             WebDriverWait(self.browser, 10, 0.1).until(
-                EC.visibility_of_element_located(
-                    (By.CSS_SELECTOR, self.selector_anim_load_spin_in_input)))
-        except TimeoutException:
-            print("Спиннер загрузки не появился в течение указанного времени.")
-        WebDriverWait(self.browser, 10, 0.1).until(
-            EC.element_to_be_clickable(
-                (By.CSS_SELECTOR, self.selector_element_close_input)))
+                EC.element_to_be_clickable(
+                    (By.CSS_SELECTOR, self.selector_element_close_input)))
 
     def push_button_search(self):
         """Этот метод нажимает на кнопку поиска в поле ввода."""
-        elem_button_search = self.browser.find_element(
-            By.CSS_SELECTOR, self.selector_element_search_button)
-        elem_button_search.click()
-        WebDriverWait(self.browser, 10, 0.1).until(
-            EC.visibility_of_all_elements_located(
-                (By.CSS_SELECTOR, self.selector_element_title_product)))
+        with allure.step("Нажать на кнопку поиска"):
+            elem_button_search = self.browser.find_element(
+                By.CSS_SELECTOR, self.selector_element_search_button)
+            elem_button_search.click()
+        with allure.step("Подождать прогрузки необходимых элементов"):
+            WebDriverWait(self.browser, 10, 0.1).until(
+                EC.visibility_of_all_elements_located(
+                    (By.CSS_SELECTOR, self.selector_element_title_product)))
 
-    def get_elements_result_item(self) -> list:
+    def get_elements_result_item(self):
         """Этот метод получает список элементов результата поиска
         внизу, под полем ввода, еще до нажатия на значок поиска"""
         elems = self.browser.find_elements(
             By.CSS_SELECTOR, self.selector_elements_result_item)
         return elems
 
-    def get_list_name_of_result_search(self) -> list:
+    def get_list_name_of_result_search(self):
         """Этот метод получает список элементов названий
         товаров под карточкой товара"""
         list_name = self.browser.find_elements(
@@ -80,12 +86,14 @@ class MainsPage:
     def push_button_search_with_unknown_product(self):
         """Этот метод нажимает на кнопку Найти, когда
         мы ищем заведомо неизвестный товар."""
-        elem_button_search = self.browser.find_element(
-            By.CSS_SELECTOR, self.selector_element_search_button)
-        elem_button_search.click()
-        WebDriverWait(self.browser, 10, 0.1).until(
-            EC.visibility_of_all_elements_located(
-                (By.CSS_SELECTOR, self.selector_container_empty_result)))
+        with allure.step("Нажать на кнопку поиска"):
+            elem_button_search = self.browser.find_element(
+                By.CSS_SELECTOR, self.selector_element_search_button)
+            elem_button_search.click()
+        with allure.step("Подождать прогрузки необходимых элементов"):
+            WebDriverWait(self.browser, 10, 0.1).until(
+                EC.visibility_of_all_elements_located(
+                    (By.CSS_SELECTOR, self.selector_container_empty_result)))
 
     def get_elements_result_search_unknown_product(self) -> str:
         """Этот метод возвращает значение заголовка контейнера,
@@ -104,13 +112,16 @@ class MainsPage:
     def get_value_search_from_found_message(self) -> str:
         """Этот метод возвращает значение запроса
         из сообщения о найденных товарах"""
-        res = self.browser.find_element(
-            By. CSS_SELECTOR, self.selector_element_message_on_search).text
-        match = re.search(r"«(.*?)»", res)
-        value_search_from_found_message = match.group(1)
+        with allure.step("Получить сообщение о результатах поиска"):
+            res = self.browser.find_element(
+                By. CSS_SELECTOR, self.selector_element_message_on_search).text
+            allure.attach(res, "Полное сообщение")
+        with allure.step("Вычленить из сообщения введенное значение в input"):
+            match = re.search(r"«(.*?)»", res)
+            value_search_from_found_message = match.group(1)
         return value_search_from_found_message
 
-    def get_buttons_buy(self) -> list:
+    def get_buttons_buy(self):
         """Этот метод возвращает все кнопки КУПИТЬ."""
         elements = self.browser.find_elements(
             By.CSS_SELECTOR, self.selector_element_button_of_item)

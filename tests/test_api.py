@@ -1,4 +1,4 @@
-from tests.class_for_tests.ApiClass import ApiClass
+from class_for_tests.ApiClass import ApiClass
 import requests
 from DataForTests import DataForTests
 import allure
@@ -174,8 +174,7 @@ def test_negative_add_some_items_in_cart_onetime():
 @allure.description("В результате теста проверяется что при попытке\
     отправить запрос без токена запрос не отправляется")
 def test_negative_respons_without_token():
-    with allure.step("Создать запрос на переход на главную страницу сайта\
-            без добавления токена"):
+    with allure.step("Создать запрос на переход на главную страницу сайта без токена"):
         data_cart = requests.get(DataForTests.base_url_for_api + "v1/cart")
         allure.attach(str(data_cart.status_code), "Статус-код ответа")
         allure.attach(str(data_cart.reason), "Сообщение ошибки")
