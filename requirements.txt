@@ -1,0 +1,5 @@
+allure_python_commons==2.13.5
+Requests==2.32.3
+selenium==4.28.1
+webdriver_manager==4.0.2
+pytest==8.3.3
