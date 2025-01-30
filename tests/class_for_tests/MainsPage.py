@@ -14,10 +14,8 @@ from selenium.webdriver.remote.webelement import WebElement
 class MainsPage:
 
     def __init__(self):
-        pass
-        browser = webdriver.Chrome(
+        self.browser = webdriver.Chrome(
             service=ChromeService(ChromeDriverManager().install()))
-        self.browser = browser
         self.selector_element_input = ".header-search__input"
         self.selector_elements_result_item = "[index]"
         self.selector_element_cart = ".header-cart.sticky-header__controls-item"

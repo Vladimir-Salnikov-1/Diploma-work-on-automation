@@ -32,7 +32,7 @@ def test_positive_get_product_card():
     корзину путем проверки чтобы ID\
     добавленного товара и товара в корзине были равны")
 @allure.severity("critical")
-def test_psitive_add_item_in_cart():
+def test_positive_add_item_in_cart():
     with allure.step("Создать объект класса ApiClass"):
         api = ApiClass()
     with allure.step("Очистить корзину"):
