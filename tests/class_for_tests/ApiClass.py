@@ -7,42 +7,31 @@ from requests.models import Response
 
 class ApiClass:
     def __init__(self):
-        pass
-
-    def add_headers(self):
-        """Этот метод добавляет заголовки: 'Authorization' и 'Content-Type'"""
-        data = DataForTests()
-        with allure.step("Добавить headers"):
-            headers = {
-                "Authorization": data.access_token,
+        self.headers = {
+                "Authorization": DataForTests.access_token,
                 "Content-Type": "application/json"
                 }
-            allure.attach(data.access_token, "Используемый токен")
-            allure.attach(str(headers), "Передаваемые headers")
-        return headers
 
     def get_all_items(self) -> dict:
         """Этот метод возвращает все товары"""
         with allure.step("Создать объект класса DataForTests"):
             data = DataForTests()
-        with allure.step("Создать объект класса ApiClass"):
-            api = ApiClass()
-            headers = api.add_headers()
         with allure.step("Создать запрос на получение всех продуктов"):
             request = requests.get(
-                data.base_url_for_api + "v2/products", headers=headers).content
+                data.base_url_for_api + "v2/products",
+                headers=self.headers).content
+            allure.attach(str(self.headers), "Передаваемые заголовки")
         return request
 
     def get_all_id_items_can_buy(self) -> list:
         """Этот метод возвращает список id всех товаров не в наличии"""
         with allure.step("Создать объект класса DataForTests"):
             data = DataForTests()
-        with allure.step("Создать объект класса ApiClass"):
-            api = ApiClass()
-            headers = api.add_headers()
         with allure.step("Создать запрос на получение списка всех продуктов"):
             request = requests.get(
-                data.base_url_for_api + "v2/products", headers=headers).content
+                data.base_url_for_api + "v2/products",
+                headers=self.headers).content
+            allure.attach(str(self.headers), "Передаваемые заголовки")
             data = json.loads(request)
         with allure.step("Отфильтровать список, получить ID\
                 товаров которые готовы к покупке"):
@@ -54,13 +43,12 @@ class ApiClass:
         """Этот метод возвращает список id всех товаров в наличии"""
         with allure.step("Создать объект класса DataForTests"):
             data = DataForTests()
-        with allure.step("Создать объект класса ApiClass"):
-            api = ApiClass()
-            headers = api.add_headers()
         with allure.step("Создать запрос на получение списка всех продуктов"):
             request = requests.get(
-                data.base_url_for_api + "v2/products", headers=headers).content
+                data.base_url_for_api + "v2/products",
+                headers=self.headers).content
             data = json.loads(request)
+            allure.attach(str(self.headers), "Передаваемые заголовки")
         with allure.step("Отфильтровать список, получить ID товаров\
                 которые не готовы к покупке"):
             can_buy_ids = [item['id'] for item in data[
@@ -72,13 +60,11 @@ class ApiClass:
         возвращает ответ от сервера в json"""
         with allure.step("Создать объект класса DataForTests"):
             data = DataForTests()
-        with allure.step("Создать объект класса ApiClass"):
-            api = ApiClass()
-            headers = api.add_headers()
         with allure.step("Создать запрос на переход в корзину"):
             request = requests.get(
-                data.base_url_for_api + "v1/cart", headers=headers).text
+                data.base_url_for_api + "v1/cart", headers=self.headers).text
             data_request = json.loads(request)
+            allure.attach(str(self.headers), "Передаваемые заголовки")
         return data_request
 
     def add_item_in_cart(self, id_item) -> Response:
@@ -86,9 +72,6 @@ class ApiClass:
         Принимает на вход id товара"""
         with allure.step("Создать объект класса DataForTests"):
             data = DataForTests()
-        with allure.step("Создать объект класса ApiClass"):
-            api = ApiClass()
-            headers = api.add_headers()
         with allure.step("Назначить тело запроса"):
             body = {
                     "id": id_item,
@@ -99,34 +82,32 @@ class ApiClass:
         with allure.step("Создать запрос для добавления товара в корзину"):
             request = requests.post(
                 data.base_url_for_api + "v1/cart/product",
-                headers=headers, json=body)
+                headers=self.headers, json=body)
             allure.attach(str(id_item), "Передаваемый ID")
             allure.attach(str(body), "Тело запроса")
+            allure.attach(str(self.headers), "Передаваемые заголовки")
         return request
 
     def delete_cart(self) -> Response:
         """Этот метод очищает корзину"""
         with allure.step("Создать объект класса DataForTests"):
             data = DataForTests()
-        with allure.step("Создать объект класса ApiClass"):
-            api = ApiClass()
-            headers = api.add_headers()
         with allure.step("Создать запрос для очищения корзины"):
             request = requests.delete(
-                data.base_url_for_api + "v1/cart", headers=headers)
+                data.base_url_for_api + "v1/cart", headers=self.headers)
+            allure.attach(str(self.headers), "Передаваемые заголовки")
         return request
 
     def get_all_url_items_can_buy(self) -> list:
         """Этот метод возвращает список url всех товаров в наличии"""
         with allure.step("Создать объект класса DataForTests"):
             data = DataForTests()
-        with allure.step("Создать объект класса ApiClass"):
-            api = ApiClass()
-            headers = api.add_headers()
         with allure.step("Создать запрос для получения всех товаров"):
             request = requests.get(
-                data.base_url_for_api + "v2/products", headers=headers).content
+                data.base_url_for_api + "v2/products",
+                headers=self.headers).content
             data = json.loads(request)
+            allure.attach(str(self.headers), "Передаваемые заголовки")
         with allure.step("Отфильтровать все URL у товаров в наличии"):
             can_buy_urls = [item['attributes']['url'] for item in data[
                 'data'] if item['attributes']['status'] == 'canBuy']
@@ -139,27 +120,24 @@ class ApiClass:
         Принимает на вход url товара, возвращает тело ответа в json"""
         with allure.step("Создать объект класса DataForTests"):
             data = DataForTests()
-        with allure.step("Создать объект класса ApiClass"):
-            api = ApiClass()
-            headers = api.add_headers()
         with allure.step("Создать запрос для получения карточки товара"):
             request = requests.get(
                 data.base_url_for_api + "v1/products/slug/" + product_url,
-                headers=headers).text
+                headers=self.headers).text
             data_resp = json.loads(request)
             allure.attach(product_url, "Передаваемый URL")
+            allure.attach(str(self.headers), "Передаваемые заголовки")
         return data_resp
 
     def get_short_contents_of_cart(self) -> json:
         """Этот метод возвращает краткое содержание корзины"""
         with allure.step("Создать объект класса DataForTests"):
             data = DataForTests()
-        with allure.step("Создать объект класса ApiClass"):
-            api = ApiClass()
-            headers = api.add_headers()
         with allure.step("Создать запрос для получения\
                 краткого содержания корзины"):
             request = requests.get(
-                data.base_url_for_api + "v1/cart/short", headers=headers).text
+                data.base_url_for_api + "v1/cart/short",
+                headers=self.headers).text
+            allure.attach(str(self.headers), "Передаваемые заголовки")
         data_resp = json.loads(request)
         return data_resp
